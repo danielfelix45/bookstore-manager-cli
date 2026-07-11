@@ -1,0 +1,19 @@
+{
+  "name": "bookstore-manager-cli",
+  "version": "1.0.0",
+  "description": "CLI application for managing a bookstore using Node.js, TypeScript and PostgreSQL.",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "ts-node src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
+}
