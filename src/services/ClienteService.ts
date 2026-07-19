@@ -27,6 +27,10 @@ export class ClienteService {
     return this.clienteRepository.create(cliente);
   }
 
+  async listarClientes(): Promise<Cliente[]> {
+    return this.clienteRepository.findAll();
+  }
+
   async buscarClientePorId(id: number): Promise<Cliente> {
     if (!Number.isInteger(id) || id <= 0) {
       throw new Error("O ID deve ser um número inteiro positivo.");
