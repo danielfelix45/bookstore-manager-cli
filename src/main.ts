@@ -8,6 +8,11 @@ import { LivroService } from "./services/LivroService";
 import { LivroController } from "./controllers/LivroController";
 import { LivroMenu } from "./menus/LivroMenu";
 
+import { ClienteRepository } from "./repositories/ClienteRepository";
+import { ClienteService } from "./services/ClienteService";
+import { ClienteController } from "./controllers/ClienteController";
+import { ClienteMenu } from "./menus/ClienteMenu";
+
 async function main(): Promise<void> {
   try {
     // ===== MÓDULO DE AUTORES =====
@@ -20,18 +25,22 @@ async function main(): Promise<void> {
     // ===== MÓDULO DE LIVROS =====
 
     const livroRepository = new LivroRepository();
+    // const livroService = new LivroService(livroRepository, autorRepository);
+    // const livroController = new LivroController(livroService);
+    // const livroMenu = new LivroMenu(livroController);
 
-    const livroService = new LivroService(livroRepository, autorRepository);
+    // ===== MÓDULO DE CLIENTES =====
 
-    const livroController = new LivroController(livroService);
-    const livroMenu = new LivroMenu(livroController);
+    const clienteRepository = new ClienteRepository();
+    const clienteService = new ClienteService(clienteRepository);
+    const clienteController = new ClienteController(clienteService);
+    const clienteMenu = new ClienteMenu(clienteController);
 
     // ===== INÍCIO DA APLICAÇÃO =====
 
-    await livroMenu.mostrarMenu();
+    await clienteMenu.mostrarMenu();
 
-    livroMenu.fechar();
-    // autorMenu.fechar();
+    clienteMenu.fechar();
   } catch (error) {
     if (error instanceof Error) {
       console.error(`Erro ao iniciar a aplicação: ${error.message}`);
