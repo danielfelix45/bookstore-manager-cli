@@ -1,16 +1,11 @@
-import * as readline from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
-
 import { EmprestimoController } from "../controllers/EmprestimoController";
+import type { Interface } from "node:readline/promises";
 
 export class EmprestimoMenu {
-  private readonly rl = readline.createInterface({ input, output });
-
-  constructor(private readonly emprestimoController: EmprestimoController) {}
-
-  public fechar(): void {
-    this.rl.close();
-  }
+  constructor(
+    private readonly emprestimoController: EmprestimoController,
+    private readonly rl: Interface,
+  ) {}
 
   async mostrarMenu(): Promise<void> {
     while (true) {
@@ -49,8 +44,7 @@ export class EmprestimoMenu {
           break;
 
         case "0":
-          console.log("\nEncerrando o módulo de empréstimos...");
-          this.fechar();
+          console.log("\nVoltando ao menu principal...");
           return;
 
         default:

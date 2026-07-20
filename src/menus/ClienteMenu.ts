@@ -1,17 +1,12 @@
-import * as readline from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
-
 import { Cliente } from "../models/Cliente";
 import { ClienteController } from "../controllers/ClienteController";
+import type { Interface } from "node:readline/promises";
 
 export class ClienteMenu {
-  private readonly rl = readline.createInterface({ input, output });
-
-  constructor(private readonly clienteController: ClienteController) {}
-
-  public fechar(): void {
-    this.rl.close();
-  }
+  constructor(
+    private readonly clienteController: ClienteController,
+    private readonly rl: Interface,
+  ) {}
 
   async mostrarMenu(): Promise<void> {
     while (true) {
@@ -55,8 +50,7 @@ export class ClienteMenu {
           break;
 
         case "0":
-          console.log("\nEncerrando o módulo de clientes...");
-          this.fechar();
+          console.log("\nVoltando ao menu principal...");
           return;
 
         default:

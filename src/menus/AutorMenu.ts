@@ -1,22 +1,18 @@
 import { Autor } from "../models/Autor";
-import * as readline from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
 import { AutorController } from "../controllers/AutorController";
+import type { Interface } from "node:readline/promises";
 
 export class AutorMenu {
-  private readonly rl = readline.createInterface({ input, output });
-
-  constructor(private readonly autorController: AutorController) {}
+  constructor(
+    private readonly autorController: AutorController,
+    private readonly rl: Interface,
+  ) {}
 
   private formatarAutor(autor: Autor) {
     return {
       ...autor,
       data_nascimento: autor.data_nascimento?.toLocaleDateString("pt-BR"),
     };
-  }
-
-  public fechar(): void {
-    this.rl.close();
   }
 
   async mostrarMenu(): Promise<void> {
@@ -56,8 +52,7 @@ export class AutorMenu {
           break;
 
         case "0":
-          console.log("\nEncerrando a aplicação...");
-          this.fechar();
+          console.log("\nVoltando ao menu principal...");
           return;
 
         default:
