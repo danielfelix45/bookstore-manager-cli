@@ -15,7 +15,7 @@ export class MenuPrincipal {
     private readonly clienteMenu: ClienteMenu,
     private readonly emprestimoMenu: EmprestimoMenu,
     private readonly rl: Interface,
-    private readonly relatorioMenu?: MenuRelatorio,
+    private readonly relatorioMenu: MenuRelatorio,
   ) {}
 
   async exibirMenu(): Promise<void> {
@@ -55,14 +55,7 @@ export class MenuPrincipal {
           break;
 
         case "5":
-          if (this.relatorioMenu) {
-            await this.relatorioMenu.exibirMenu();
-          } else {
-            console.log(
-              "\nO módulo de relatórios ainda está em desenvolvimento.",
-            );
-            await this.pausar();
-          }
+          await this.relatorioMenu.exibirMenu();
           break;
 
         case "0":

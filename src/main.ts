@@ -27,6 +27,10 @@ import { LivroMenu } from "./menus/LivroMenu";
 import { ClienteMenu } from "./menus/ClienteMenu";
 import { EmprestimoMenu } from "./menus/EmprestimoMenu";
 import { MenuPrincipal } from "./menus/MenuPrincipal";
+import { RelatorioRepository } from "./repositories/RelatorioRepository";
+import { RelatorioService } from "./services/RelatorioService";
+import { RelatorioController } from "./controllers/RelatorioController";
+import { RelatorioMenu } from "./menus/RelatorioMenu";
 
 async function main(): Promise<void> {
   const rl = readline.createInterface({
@@ -42,6 +46,7 @@ async function main(): Promise<void> {
     const livroRepository = new LivroRepository();
     const clienteRepository = new ClienteRepository();
     const emprestimoRepository = new EmprestimoRepository();
+    const relatorioRepository = new RelatorioRepository();
 
     /*
      * Services
@@ -58,6 +63,8 @@ async function main(): Promise<void> {
       clienteRepository,
     );
 
+    const relatorioService = new RelatorioService(relatorioRepository);
+
     /*
      * Controllers
      */
@@ -67,6 +74,8 @@ async function main(): Promise<void> {
 
     const emprestimoController = new EmprestimoController(emprestimoService);
 
+    const relatorioController = new RelatorioController(relatorioService);
+
     /*
      * Submenus — todos recebem o mesmo readline
      */
@@ -75,6 +84,8 @@ async function main(): Promise<void> {
     const clienteMenu = new ClienteMenu(clienteController, rl);
 
     const emprestimoMenu = new EmprestimoMenu(emprestimoController, rl);
+
+    const relatorioMenu = new RelatorioMenu(relatorioController, rl);
 
     /*
      * Menu principal
@@ -87,6 +98,7 @@ async function main(): Promise<void> {
       clienteMenu,
       emprestimoMenu,
       rl,
+      relatorioMenu,
     );
 
     await menuPrincipal.exibirMenu();
