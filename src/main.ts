@@ -1,46 +1,30 @@
-import { AutorRepository } from "./repositories/AutorRepository";
-import { AutorService } from "./services/AutorService";
-import { AutorController } from "./controllers/AutorController";
-import { AutorMenu } from "./menus/AutorMenu";
-
 import { LivroRepository } from "./repositories/LivroRepository";
-import { LivroService } from "./services/LivroService";
-import { LivroController } from "./controllers/LivroController";
-import { LivroMenu } from "./menus/LivroMenu";
-
 import { ClienteRepository } from "./repositories/ClienteRepository";
-import { ClienteService } from "./services/ClienteService";
-import { ClienteController } from "./controllers/ClienteController";
-import { ClienteMenu } from "./menus/ClienteMenu";
+
+import { EmprestimoRepository } from "./repositories/EmprestimoRepository";
+import { EmprestimoService } from "./services/EmprestimoService";
+import { EmprestimoController } from "./controllers/EmprestimoController";
+import { EmprestimoMenu } from "./menus/EmprestimoMenu";
 
 async function main(): Promise<void> {
   try {
-    // ===== MÓDULO DE AUTORES =====
-
-    const autorRepository = new AutorRepository();
-    // const autorService = new AutorService(autorRepository);
-    // const autorController = new AutorController(autorService);
-    // const autorMenu = new AutorMenu(autorController);
-
-    // ===== MÓDULO DE LIVROS =====
-
     const livroRepository = new LivroRepository();
-    // const livroService = new LivroService(livroRepository, autorRepository);
-    // const livroController = new LivroController(livroService);
-    // const livroMenu = new LivroMenu(livroController);
-
-    // ===== MÓDULO DE CLIENTES =====
-
     const clienteRepository = new ClienteRepository();
-    const clienteService = new ClienteService(clienteRepository);
-    const clienteController = new ClienteController(clienteService);
-    const clienteMenu = new ClienteMenu(clienteController);
+    const emprestimoRepository = new EmprestimoRepository();
 
-    // ===== INÍCIO DA APLICAÇÃO =====
+    const emprestimoService = new EmprestimoService(
+      emprestimoRepository,
+      livroRepository,
+      clienteRepository,
+    );
 
-    await clienteMenu.mostrarMenu();
+    const emprestimoController = new EmprestimoController(emprestimoService);
 
-    clienteMenu.fechar();
+    const emprestimoMenu = new EmprestimoMenu(emprestimoController);
+
+    await emprestimoMenu.mostrarMenu();
+
+    emprestimoMenu.fechar();
   } catch (error) {
     if (error instanceof Error) {
       console.error(`Erro ao iniciar a aplicação: ${error.message}`);
