@@ -9,7 +9,7 @@
     "start": "node dist/main.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Daniel Antonio Felix Filho",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^26.1.1",
