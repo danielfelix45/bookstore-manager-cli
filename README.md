@@ -1,470 +1,125 @@
 # 📚 BookStore Manager CLI
 
-Aplicação de gerenciamento de livraria executada via terminal, desenvolvida como projeto final avaliativo do Módulo 1 da formação **Desenvolvedor Back-End Node.js**, do programa SCTEC/SENAI.
+Aplicação de gerenciamento de livraria executada via terminal, desenvolvida com **Node.js, TypeScript e PostgreSQL** como projeto final do Módulo 1 da formação **Desenvolvimento de Software Back-end com Node.js — SCTEC/SENAI**.
 
-O sistema permite gerenciar autores, livros, clientes e empréstimos, utilizando PostgreSQL para persistência dos dados e uma arquitetura organizada em camadas.
+O projeto utiliza **SQL puro**, sem ORM, e uma arquitetura em camadas para separar regras de negócio, acesso a dados e interação com o usuário.
 
----
-
-## 🎯 Objetivo
-
-O objetivo do projeto é aplicar, de forma integrada, os principais conhecimentos desenvolvidos durante o módulo:
-
-- Node.js;
-- TypeScript;
-- PostgreSQL;
-- programação orientada a objetos;
-- interfaces e tipagem estática;
-- programação assíncrona;
-- arquitetura em camadas;
-- consultas SQL relacionais;
-- tratamento de erros;
-- Git e GitFlow.
-
----
-
-## 🛠️ Tecnologias utilizadas
+## 🛠️ Tecnologias
 
 - Node.js
 - TypeScript
 - PostgreSQL
-- Biblioteca `pg`
+- `pg`
 - `dotenv`
-- `readline/promises`
-- SQL puro
-- Git
-- GitHub
+- SQL
+- Git e GitHub
 
-O projeto foi desenvolvido sem a utilização de ORM.
+## 🏗️ Arquitetura
 
----
+```text
+Menu → Controller → Service → Repository → PostgreSQL
+```
 
-## 📋 Requisitos para execução
+A aplicação está organizada em `menus`, `controllers`, `services`, `repositories`, `models` e `database`.
 
-Antes de executar o projeto, é necessário possuir:
+## ✅ Funcionalidades
 
-- Node.js instalado;
-- npm instalado;
-- PostgreSQL instalado e em execução;
-- Git instalado;
-- um banco de dados PostgreSQL criado para a aplicação.
+- CRUD de autores, livros e clientes;
+- gerenciamento de empréstimos e devoluções;
+- controle de estoque dos livros;
+- validação de e-mails duplicados;
+- validações de disponibilidade para empréstimos;
+- relatórios de livros disponíveis e emprestados;
+- relatórios por autor e por cliente;
+- consultas relacionais com `JOIN`, `GROUP BY`, `ORDER BY` e `COUNT()`.
 
----
+## ⚙️ Como executar
 
-## 🚀 Instalação
-
-Clone o repositório:
+### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/danielfelix45/bookstore-manager-cli.git
-```
-
-Acesse a pasta do projeto:
-
-```bash
 cd bookstore-manager-cli
 ```
 
-Instale as dependências:
+### 2. Instale as dependências
 
 ```bash
 npm install
 ```
 
----
+### 3. Configure o ambiente
 
-## ⚙️ Configuração das variáveis de ambiente
-
-Na raiz do projeto, crie um arquivo chamado:
-
-```text
-.env
-```
-
-Use o arquivo `.env.example` como referência.
-
-Exemplo:
+Crie um arquivo `.env` na raiz usando `.env.example` como referência.
 
 ```env
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=sua_senha
-DB_NAME=bookstore_manager
+DB_NAME=bookstore_manager_db
 ```
 
-> O arquivo `.env` não deve ser enviado ao GitHub, pois contém informações sensíveis de conexão.
+### 4. Configure o banco
 
----
-
-## 🗄️ Configuração do banco de dados
-
-Crie um banco de dados no PostgreSQL:
+Crie o banco PostgreSQL:
 
 ```sql
 CREATE DATABASE bookstore_manager_db;
 ```
 
-Depois, execute o script SQL disponível no projeto para criar as tabelas e os relacionamentos.
-
-Exemplo de localização:
+Depois execute o script:
 
 ```text
 src/database/schema.sql
 ```
 
-O banco possui as seguintes entidades:
-
-- autores;
-- livros;
-- clientes;
-- empréstimos.
-
-### Relacionamentos
-
-- Um autor pode possuir vários livros;
-- cada livro pertence a um autor;
-- um cliente pode realizar vários empréstimos;
-- cada empréstimo está relacionado a um livro e a um cliente.
-
----
-
-## ▶️ Execução
-
-Para executar em ambiente de desenvolvimento:
+### 5. Execute a aplicação
 
 ```bash
 npm run dev
 ```
 
-Para compilar o projeto:
+Para compilar e executar a versão JavaScript:
 
 ```bash
 npm run build
-```
-
-Após a compilação, execute a versão JavaScript:
-
-```bash
 npm start
 ```
 
-A aplicação será iniciada diretamente no terminal.
-
-Menu principal:
-
-```text
-==================================
-      BOOKSTORE MANAGER CLI
-==================================
-1 - Autores
-2 - Livros
-3 - Clientes
-4 - Empréstimos
-5 - Relatórios
-0 - Encerrar aplicação
-==================================
-```
-
----
-
-## 🏗️ Arquitetura
-
-A aplicação utiliza arquitetura em camadas:
-
-```text
-Menu
-  ↓
-Controller
-  ↓
-Service
-  ↓
-Repository
-  ↓
-PostgreSQL
-```
-
-### Responsabilidades
-
-#### Menus
-
-Responsáveis pela interação com o usuário, exibição das opções e leitura dos dados pelo terminal.
-
-#### Controllers
-
-Recebem os dados dos menus e encaminham as solicitações para os Services.
-
-#### Services
-
-Contêm as regras de negócio, validações e coordenação das operações.
-
-#### Repositories
-
-Responsáveis pela comunicação direta com o PostgreSQL e execução das consultas SQL.
-
-#### Models
-
-Representam as entidades e estruturas de dados utilizando interfaces TypeScript.
-
-#### Database
-
-Centraliza a conexão com o PostgreSQL e o script de criação do banco.
-
----
-
-## 📁 Estrutura de pastas
+## 📁 Estrutura principal
 
 ```text
 src/
 ├── controllers/
-│   ├── AutorController.ts
-│   ├── ClienteController.ts
-│   ├── EmprestimoController.ts
-│   ├── LivroController.ts
-│   └── RelatorioController.ts
-│
 ├── database/
 │   ├── connection.ts
 │   └── schema.sql
-│
 ├── menus/
-│   ├── AutorMenu.ts
-│   ├── ClienteMenu.ts
-│   ├── EmprestimoMenu.ts
-│   ├── LivroMenu.ts
-│   ├── MenuPrincipal.ts
-│   └── RelatorioMenu.ts
-│
 ├── models/
-│   ├── Autor.ts
-│   ├── Cliente.ts
-│   ├── Emprestimo.ts
-│   └── Livro.ts
-│
 ├── repositories/
-│   ├── AutorRepository.ts
-│   ├── ClienteRepository.ts
-│   ├── EmprestimoRepository.ts
-│   ├── IAutorRepository.ts
-│   ├── IClienteRepository.ts
-│   ├── IEmprestimoRepository.ts
-│   ├── ILivroRepository.ts
-│   ├── IRelatorioRepository.ts
-│   ├── LivroRepository.ts
-│   └── RelatorioRepository.ts
-│
 ├── services/
-│   ├── AutorService.ts
-│   ├── ClienteService.ts
-│   ├── EmprestimoService.ts
-│   ├── LivroService.ts
-│   └── RelatorioService.ts
-│
-├── utils/
-│
 └── main.ts
 ```
 
-### Utils
-
-Pasta reservada para funções auxiliares reutilizáveis. Nesta versão, as validações específicas permanecem nas respectivas camadas de serviço.
-
-> A estrutura pode variar levemente conforme a organização final do repositório.
-
----
-
-## ✅ Funcionalidades
-
-### Autores
-
-- Cadastrar autor;
-- listar autores;
-- buscar autor por ID;
-- atualizar autor;
-- excluir autor.
-
-### Livros
-
-- Cadastrar livro;
-- listar livros;
-- buscar livro por ID;
-- atualizar livro;
-- excluir livro;
-- vincular livro a um autor;
-- controlar quantidade disponível em estoque.
-
-### Clientes
-
-- Cadastrar cliente;
-- listar clientes;
-- buscar cliente por ID;
-- atualizar cliente;
-- excluir cliente;
-- impedir cadastro de e-mails duplicados.
-
-### Empréstimos
-
-- Registrar empréstimo;
-- listar empréstimos;
-- buscar empréstimo;
-- registrar devolução;
-- reduzir estoque ao emprestar;
-- aumentar estoque ao devolver;
-- impedir empréstimos de livros indisponíveis;
-- impedir devoluções duplicadas.
-
-### Relatórios
-
-- Livros disponíveis;
-- livros emprestados;
-- livros cadastrados por autor;
-- quantidade de empréstimos por livro;
-- clientes com empréstimos ativos.
-
----
-
-## 🔍 Consultas SQL utilizadas
-
-O projeto utiliza SQL diretamente por meio da biblioteca `pg`.
-
-Entre os recursos utilizados estão:
-
-- `INSERT`;
-- `SELECT`;
-- `UPDATE`;
-- `DELETE`;
-- `INNER JOIN`;
-- `LEFT JOIN`;
-- `WHERE`;
-- `GROUP BY`;
-- `ORDER BY`;
-- função de agregação `COUNT()`.
-
----
-
 ## 🧠 Regras de negócio
 
-A aplicação implementa validações como:
+Entre as principais validações implementadas estão:
 
-- autor precisa existir para cadastrar um livro;
-- título do livro é obrigatório;
+- autor deve existir antes do cadastro de um livro;
 - estoque não pode ser negativo;
-- cliente precisa existir para realizar empréstimo;
-- livro precisa existir para realizar empréstimo;
+- cliente e livro devem existir para realizar um empréstimo;
 - livro precisa possuir estoque disponível;
-- e-mail de cliente não pode estar duplicado;
-- empréstimo precisa existir para registrar devolução;
-- um empréstimo já devolvido não pode ser devolvido novamente.
+- e-mail do cliente não pode estar duplicado;
+- empréstimos já devolvidos não podem ser devolvidos novamente;
+- estoque é atualizado automaticamente no empréstimo e na devolução.
 
-Os erros são tratados sem interromper a execução da aplicação.
+## 📌 Sobre o projeto
 
----
-
-## 💻 Exemplo de utilização
-
-### Cadastro de livro
-
-```text
-Digite o título do livro: 1984
-Digite o ano de publicação: 1949
-Digite o gênero: Ficção distópica
-Digite a quantidade em estoque: 2
-Digite o ID do autor: 1
-```
-
-### Realização de empréstimo
-
-```text
-Digite o ID do livro: 1
-Digite o ID do cliente: 1
-
-Empréstimo realizado com sucesso.
-```
-
-### Tentativa de empréstimo sem estoque
-
-```text
-Erro ao realizar empréstimo:
-Livro indisponível para empréstimo.
-```
-
----
-
-## 🌿 Versionamento e GitFlow
-
-O desenvolvimento utilizou Git e GitHub com branches separadas por funcionalidade.
-
-Branches utilizadas:
-
-```text
-main
-develop
-feat/database-connection
-feat/database-schema
-feat/authors
-feat/books
-feat/customers
-feat/loans
-feat/reports
-docs/readme
-```
-
-Fluxo adotado:
-
-```text
-feature branch
-      ↓
-develop
-      ↓
-main
-```
-
-Os commits foram realizados de maneira incremental, representando a evolução do projeto.
-
----
-
-## 🔮 Melhorias futuras
-
-Possíveis melhorias para versões futuras:
-
-- autenticação de usuários;
-- controle de perfis e permissões;
-- data prevista para devolução;
-- aplicação de multa por atraso;
-- histórico detalhado por cliente;
-- paginação de registros;
-- testes automatizados;
-- API REST;
-- interface web;
-- uso de transações no PostgreSQL;
-- criação de logs da aplicação.
-
----
+O BookStore Manager CLI foi desenvolvido individualmente como projeto avaliativo da formação **Desenvolvimento de Software Back-end com Node.js — SCTEC/SENAI**, aplicando TypeScript, PostgreSQL, SQL relacional, programação orientada a objetos e organização em camadas.
 
 ## 👤 Autor
 
 **Daniel Antônio Félix Filho**
 
-Projeto desenvolvido individualmente como parte da formação **Desenvolvedor Back-End Node.js — SCTEC/SENAI**.
-
-GitHub:
-
-```text
-https://github.com/danielfelix45
-```
-
----
-
-## 📌 Kanban
-
-O acompanhamento das tarefas do projeto foi realizado por meio do Kanban:
-
-```text
-https://trello.com/b/gHJ1YY4l/%F0%9F%93%9A-bookstore-manager-cli
-```
-
----
-
-## 📄 Licença
-
-Este projeto foi desenvolvido para fins educacionais.
+GitHub: https://github.com/danielfelix45
